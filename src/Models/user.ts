@@ -1,13 +1,13 @@
-import sequelize from "./index";
-import {DataTypes, InferAttributes, Model} from "sequelize";
+import sequelize from "./index"
+import { DataTypes, InferAttributes, Model, CreationOptional } from "sequelize"
 
 interface UserModel extends Model<InferAttributes<UserModel>> {
     id: number
     name: string
     email: string
     email_verified_at: Date
-    created_at: Date,
-    updated_at: Date,
+    created_at: Date
+    updated_at: Date
 }
 
 const User = sequelize.define<UserModel>('User', {
@@ -39,6 +39,8 @@ const User = sequelize.define<UserModel>('User', {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
     }
-});
+}, {
+    timestamps: false
+})
 
-export default User;
+export default User
