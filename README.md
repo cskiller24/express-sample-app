@@ -14,8 +14,9 @@
    2. name (varchar)
    3. email (varchar)
    4. email_verified_at (timestamp)
-   5. created_at (timestamp)
-   6. updated_at (timestamp)
+   5. password (varchar)
+   6. created_at (timestamp)
+   7. updated_at (timestamp)
    
 2. Balance
    1. id (uuid / int)

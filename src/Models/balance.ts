@@ -1,4 +1,4 @@
-import sequelize from "./index"
+import sequelize from "./database"
 import { DataTypes, InferAttributes, Model } from "sequelize"
 
 interface BalanceModel extends Model<InferAttributes<BalanceModel>> {

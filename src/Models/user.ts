@@ -1,18 +1,20 @@
-import sequelize from "./index"
-import { DataTypes, InferAttributes, Model, CreationOptional } from "sequelize"
+import sequelize from "./database"
+import { DataTypes, InferAttributes, Model, CreationOptional, InferCreationAttributes } from "sequelize"
 
-interface UserModel extends Model<InferAttributes<UserModel>> {
-    id: number
+interface UserModel extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>> {
+    id: CreationOptional<number>
     name: string
     email: string
-    email_verified_at: Date
-    created_at: Date
-    updated_at: Date
+    password: string
+    email_verified_at: CreationOptional<Date>
+    created_at: CreationOptional<Date>
+    updated_at: CreationOptional<Date>
 }
 
 const User = sequelize.define<UserModel>('User', {
     id: {
         primaryKey: true,
+        autoIncrement: true,
         type: DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
     },
@@ -24,6 +26,10 @@ const User = sequelize.define<UserModel>('User', {
         allowNull: false,
         type: DataTypes.STRING,
         unique: true,
+    },
+    password: {
+        allowNull: false,
+        type: DataTypes.STRING
     },
     email_verified_at: {
         allowNull: true,
@@ -40,7 +46,8 @@ const User = sequelize.define<UserModel>('User', {
         defaultValue: DataTypes.NOW,
     }
 }, {
-    timestamps: false
+    timestamps: false,
+    tableName: 'users'
 })
 
 export default User

@@ -1,4 +1,4 @@
-import 'dotenv/config.js'
+import 'dotenv/config'
 
 const SequelizeConfig = {
     username: process.env.DB_USERNAME,
