@@ -1,53 +1,67 @@
-import sequelize from "./database"
-import { DataTypes, InferAttributes, Model, CreationOptional, InferCreationAttributes } from "sequelize"
+import sequelize from './database';
+import {
+  DataTypes,
+  InferAttributes,
+  Model,
+  CreationOptional,
+  InferCreationAttributes,
+} from 'sequelize';
 
-interface UserModel extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>> {
-    id: CreationOptional<number>
-    name: string
-    email: string
-    password: string
-    email_verified_at: CreationOptional<Date>
-    created_at: CreationOptional<Date>
-    updated_at: CreationOptional<Date>
+interface UserModel
+  extends Model<
+    InferAttributes<UserModel>,
+    InferCreationAttributes<UserModel>
+  > {
+  id: CreationOptional<number>;
+  name: string;
+  email: string;
+  password: string;
+  email_verified_at: CreationOptional<Date>;
+  created_at: CreationOptional<Date>;
+  updated_at: CreationOptional<Date>;
 }
 
-const User = sequelize.define<UserModel>('User', {
+const User = sequelize.define<UserModel>(
+  'User',
+  {
     id: {
-        primaryKey: true,
-        autoIncrement: true,
-        type: DataTypes.INTEGER.UNSIGNED,
-        allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false,
     },
     name: {
-        allowNull: false,
-        type: DataTypes.STRING,
+      allowNull: false,
+      type: DataTypes.STRING,
     },
     email: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        unique: true,
+      allowNull: false,
+      type: DataTypes.STRING,
+      unique: true,
     },
     password: {
-        allowNull: false,
-        type: DataTypes.STRING
+      allowNull: false,
+      type: DataTypes.STRING,
     },
     email_verified_at: {
-        allowNull: true,
-        type: DataTypes.DATE,
+      allowNull: true,
+      type: DataTypes.DATE,
     },
     created_at: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
+      allowNull: false,
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
     },
     updated_at: {
-        allowNull: false,
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-    }
-}, {
+      allowNull: false,
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
     timestamps: false,
-    tableName: 'users'
-})
+    tableName: 'users',
+  }
+);
 
-export default User
+export default User;
