@@ -6,7 +6,7 @@
     "dev": "npx tsx src/index.ts",
     "build": "npx tsc",
     "watch": "nodemon --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"npx tsx src/index.ts",
-    "lint": "npx prettier 'src/**/*.ts' --write",
+    "lint": "npx prettier --write src/**/*.ts",
     "migrate": "node src/database/migrate.js"
   },
   "keywords": [],

@@ -3,11 +3,9 @@ import database from '../../Models/database';
 
 const dropAll = async () => {
   await database.authenticate();
-  await database.dropAllSchemas({logging: true});
+  await database.dropAllSchemas({ logging: true });
 
-  runMigrations().then(() => {
-
-  });
+  runMigrations().then(() => {});
 };
 
-dropAll().then(r => (console.log('Done!')));
+dropAll().then((r) => console.log('Done!'));
