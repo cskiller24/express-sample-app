@@ -12,12 +12,25 @@ export const up: Migration = async ({ context: sequelize }) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    createdAt: {
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    password: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    email_verified_at: {
+      allowNull: true,
+      type: DataTypes.DATE,
+    },
+    created_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
       allowNull: false,
     },
-    updatedAt: {
+    updated_at: {
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
       allowNull: false,
