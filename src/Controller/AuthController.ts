@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { RegisterRequest } from '../Validators/AuthSchema';
 import { RESPONSE_CODES } from '../utils/response';
 import { User } from '../Models/index';
+import { hash } from '../utils/Hash';
 
 class AuthController {
   static login(req: Request, res: Response): void {}
@@ -14,7 +15,7 @@ class AuthController {
     await User.create({
       name: body.name,
       email: body.email,
-      password: body.password,
+      password: await hash(body.password),
     }).then((user) => {
       res.status(RESPONSE_CODES.CREATED).json({ user: user });
     });
