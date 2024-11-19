@@ -9,11 +9,11 @@ const router: Router = Router();
 
 router.get('/', HomeController.index);
 
-router.get('/user', (req, res) => {
-    return User.findAll().then((users) => {
-        res.json(users)
-    })
-})
+router.get('/users', (req, res) => {
+  User.findAll().then((users) => {
+    res.json(users);
+  });
+});
 
 router.post('/register', validate(registerSchema), AuthController.register);
 

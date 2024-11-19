@@ -4,9 +4,11 @@ import { STATUS_CODES } from 'node:http';
 
 import { RESPONSE_CODES } from '../utils/response';
 
-export function validate(schema: z.ZodObject<any, any>) {
+export function validate(
+  schema: z.ZodObject<any, any> | z.ZodEffects<any, any>
+) {
   return (req: Request, res: Response, next: NextFunction) => {
-    schema.parse(req.body);
+    schema.parseAsync(req.body);
 
     next();
   };
