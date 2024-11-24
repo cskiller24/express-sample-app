@@ -1,16 +1,19 @@
 import { Request, Response, NextFunction } from 'express';
 import { z, ZodError } from 'zod';
-import { STATUS_CODES } from 'node:http';
 
 import { RESPONSE_CODES } from '../utils/response';
 
 export function validate(
   schema: z.ZodObject<any, any> | z.ZodEffects<any, any>
 ) {
-  return (req: Request, res: Response, next: NextFunction) => {
-    schema.parseAsync(req.body);
-
-    next();
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await schema.parseAsync(req.body);
+      
+      next();
+    } catch(err) {
+      next(err)
+    }
   };
 }
 

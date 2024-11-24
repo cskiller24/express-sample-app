@@ -2,7 +2,7 @@ import { Router } from 'express';
 import HomeController from '../Controller/HomeController';
 import AuthController from '../Controller/AuthController';
 import { validate } from '../Validators/ValidatorService';
-import { registerSchema } from '../Validators/AuthSchema';
+import { loginSchema, registerSchema } from '../Validators/AuthSchema';
 import { User } from '../Models';
 
 const router: Router = Router();
@@ -16,5 +16,6 @@ router.get('/users', (req, res) => {
 });
 
 router.post('/register', validate(registerSchema), AuthController.register);
+router.post('/login', validate(loginSchema), AuthController.login);
 
 export default router;

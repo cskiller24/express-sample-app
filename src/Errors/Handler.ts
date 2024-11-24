@@ -11,10 +11,12 @@ export function errorHandler(
 ) {
   if (err instanceof UnauthorizedError) {
     err.withResponse(res);
+    return
   }
 
   if (err instanceof ZodError) {
     parseErrorResponse(err, res);
+    return 
   }
 
   next(err);

@@ -30,3 +30,25 @@ type RegisterSchema = z.infer<typeof registerSchema>;
 export interface RegisterRequest extends Request {
   body: RegisterSchema;
 }
+
+export const loginSchema = z.object({
+  email: z
+    .string()
+    .email()
+    .refine(async (current) => {
+      const count = await User.count({
+        where: {
+          email: current,
+        },
+      });
+
+      return count === 1;
+    }, "Invalid email or password."),
+  password: z.string(),
+});
+
+type LoginSchema = z.infer<typeof loginSchema>;
+
+export interface LoginRequest extends Request {
+  body: LoginSchema;
+}

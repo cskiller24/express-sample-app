@@ -8,6 +8,7 @@ interface BalanceModel extends Model<InferAttributes<BalanceModel>> {
   description: string;
   type: string;
   created_at: Date;
+  updated_at: Date;
 }
 
 const Balance = sequelize.define<BalanceModel>(
@@ -38,9 +39,14 @@ const Balance = sequelize.define<BalanceModel>(
       type: DataTypes.DATE,
       defaultValue: DataTypes.NOW,
     },
+    updated_at: {
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
     timestamps: false,
+    tableName: 'balances'
   }
 );
 
