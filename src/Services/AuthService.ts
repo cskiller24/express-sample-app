@@ -44,7 +44,7 @@ class AuthService {
   }
 
   static async userModelToSequelize(user: User) {
-    return await UserModel.findByPk(user.id)
+    return await UserModel.findByPk(user.id);
   }
 }
 

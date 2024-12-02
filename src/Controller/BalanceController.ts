@@ -79,7 +79,9 @@ class BalanceController {
       }
 
       const updateData = Object.fromEntries(
-        Object.entries({ amount, description, type }).filter(([_, value]) => value !== undefined)
+        Object.entries({ amount, description, type }).filter(
+          ([_, value]) => value !== undefined
+        )
       );
 
       await balance.update(updateData);

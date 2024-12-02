@@ -1,4 +1,3 @@
-
 import { Umzug, SequelizeStorage } from 'umzug';
 import sequelize from './sequelize';
 

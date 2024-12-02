@@ -43,7 +43,7 @@ export const loginSchema = z.object({
       });
 
       return count === 1;
-    }, "Invalid email or password."),
+    }, 'Invalid email or password.'),
   password: z.string(),
 });
 

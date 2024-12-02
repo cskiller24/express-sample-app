@@ -26,12 +26,10 @@ export interface BalanceStoreRequest extends AuthRequest {
   body: storeSchema;
 }
 
-export interface BalanceWithParamsRequest extends BalanceStoreRequest {
-  
-}
+export interface BalanceWithParamsRequest extends BalanceStoreRequest {}
 
 export interface BalanceUpdateRequest extends AuthRequest {
-  body: updateSchema,
+  body: updateSchema;
   params: {
     balanceId: string;
   };

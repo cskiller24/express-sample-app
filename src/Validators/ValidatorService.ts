@@ -8,12 +8,12 @@ export function validate(
 ) {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(schema)
+      console.log(schema);
       await schema.parseAsync(req.body);
-      
+
       next();
-    } catch(err) {
-      next(err)
+    } catch (err) {
+      next(err);
     }
   };
 }
