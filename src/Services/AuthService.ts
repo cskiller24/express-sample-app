@@ -2,6 +2,7 @@ import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import { User } from '../Types';
 import UnauthorizedError from '../Errors/UnauthorizedError';
+import { User as UserModel } from '../Models';
 
 class AuthService {
   static generateToken({ id, email, name }: User): string {
@@ -40,6 +41,10 @@ class AuthService {
     } catch (err) {
       return false;
     }
+  }
+
+  static async userModelToSequelize(user: User) {
+    return await UserModel.findByPk(user.id)
   }
 }
 

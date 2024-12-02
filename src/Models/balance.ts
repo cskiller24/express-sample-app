@@ -1,14 +1,24 @@
 import sequelize from '../database/sequelize';
-import { DataTypes, InferAttributes, Model } from 'sequelize';
+import {
+  CreationOptional,
+  DataTypes,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+} from 'sequelize';
 
-interface BalanceModel extends Model<InferAttributes<BalanceModel>> {
-  id: number;
+interface BalanceModel
+  extends Model<
+    InferAttributes<BalanceModel>,
+    InferCreationAttributes<BalanceModel>
+  > {
+  id: CreationOptional<number>;
   user_id: number;
   amount: number;
   description: string;
   type: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: CreationOptional<Date>;
+  updated_at: CreationOptional<Date>;
 }
 
 const Balance = sequelize.define<BalanceModel>(
@@ -17,6 +27,7 @@ const Balance = sequelize.define<BalanceModel>(
     id: {
       primaryKey: true,
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       allowNull: false,
     },
     user_id: {
@@ -46,8 +57,13 @@ const Balance = sequelize.define<BalanceModel>(
   },
   {
     timestamps: false,
-    tableName: 'balances'
+    tableName: 'balances',
   }
 );
+
+export const BALANCE_TYPES = {
+  BALANCE_DEPOSIT: 'deposit',
+  BALANCE_WITHDRAWAL: 'withdraw',
+};
 
 export default Balance;

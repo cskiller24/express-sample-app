@@ -21,6 +21,10 @@ export const up: Migration = async ({ context: sequelize }) => {
       type: DataTypes.BIGINT,
       allowNull: false,
     },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     description: {
       type: DataTypes.TEXT,
       allowNull: true,
@@ -36,4 +40,8 @@ export const up: Migration = async ({ context: sequelize }) => {
       allowNull: false,
     },
   });
+};
+
+export const down: Migration = async ({ context: sequelize }) => {
+  await sequelize.getQueryInterface().dropTable('balances');
 };

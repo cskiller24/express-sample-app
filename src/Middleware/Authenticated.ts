@@ -27,6 +27,7 @@ export const authenticated = (
   next();
 };
 
+
 const getBearerToken = (req: Request): string | null => {
   const authHeader = req.headers.authorization;
 
