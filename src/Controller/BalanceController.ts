@@ -1,10 +1,8 @@
 import { NextFunction, Response, Request } from 'express';
-import AuthService from '../Services/AuthService';
 import { Balance } from '../Models';
 import {
   BalanceStoreRequest,
   BalanceUpdateRequest,
-  BalanceWithParamsRequest,
 } from '../Validators/BalanceSchema';
 import { RESPONSE_CODES } from '../utils/response';
 import { AuthRequest } from '../Types';
