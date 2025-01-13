@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import UnauthorizedError from './UnauthorizedError';
+import { UnauthorizedError, UnprocessableEntityError } from './index';
 import { ZodError } from 'zod';
 import { parseErrorResponse } from '../Validators/ValidatorService';
 
@@ -9,7 +9,7 @@ export function errorHandler(
   res: Response,
   next: NextFunction
 ) {
-  if (err instanceof UnauthorizedError) {
+  if (err instanceof UnauthorizedError || err instanceof UnprocessableEntityError) {
     err.withResponse(res);
     return;
   }

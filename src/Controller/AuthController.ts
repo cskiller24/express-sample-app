@@ -4,6 +4,7 @@ import { RESPONSE_CODES } from '../utils/response';
 import { User } from '../Models/index';
 import { hash, verify } from '../utils/Hash';
 import AuthService from '../Services/AuthService';
+import { UnprocessableEntityError} from '../Errors';
 
 class AuthController {
   static async login(req: LoginRequest, res: Response, next: NextFunction) {
@@ -13,19 +14,13 @@ class AuthController {
       const user = await User.findOne({ where: { email } });
 
       if (!user) {
-        res.status(RESPONSE_CODES.UNPROCESSABLE_ENTITY).json({
-          message: 'Invalid email or password',
-        });
-        return;
+        throw new UnprocessableEntityError('Invalid email or password')
       }
 
       const isPasswordValid = await verify(password, user.password);
 
       if (!isPasswordValid) {
-        res.status(RESPONSE_CODES.UNPROCESSABLE_ENTITY).json({
-          message: 'Invalid email or password',
-        });
-        return;
+        throw new UnprocessableEntityError('Invalid email or password')
       }
 
       const token = AuthService.generateToken({
