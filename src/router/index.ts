@@ -9,7 +9,6 @@ import { Router } from 'express';
 import {
   storeSchema as balanceStoreSchema,
   updateSchema as balanceUpdateSchema,
-  storeSchema,
 } from '../Validators/BalanceSchema';
 
 const router: Router = Router();
@@ -24,6 +23,7 @@ router.get('/users', (req, res) => {
 
 router.post('/register', validate(registerSchema), AuthController.register);
 router.post('/login', validate(loginSchema), AuthController.login);
+router.get('/user', authenticated, AuthController.user);
 
 router.get('/balances', authenticated, BalanceController.index);
 router.post(

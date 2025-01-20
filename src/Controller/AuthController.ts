@@ -4,7 +4,8 @@ import { RESPONSE_CODES } from '../utils/response';
 import { User } from '../Models/index';
 import { hash, verify } from '../utils/Hash';
 import AuthService from '../Services/AuthService';
-import { UnprocessableEntityError} from '../Errors';
+import { UnauthorizedError, UnprocessableEntityError } from '../Errors';
+import { AuthRequest } from '../Types';
 
 class AuthController {
   static async login(req: LoginRequest, res: Response, next: NextFunction) {
@@ -14,13 +15,13 @@ class AuthController {
       const user = await User.findOne({ where: { email } });
 
       if (!user) {
-        throw new UnprocessableEntityError('Invalid email or password')
+        throw new UnprocessableEntityError('Invalid email or password');
       }
 
       const isPasswordValid = await verify(password, user.password);
 
       if (!isPasswordValid) {
-        throw new UnprocessableEntityError('Invalid email or password')
+        throw new UnprocessableEntityError('Invalid email or password');
       }
 
       const token = AuthService.generateToken({
@@ -29,7 +30,7 @@ class AuthController {
         name: user.name,
       });
 
-      res.json({ token });
+      res.json({ name: user.name, email: user.email, token: token });
     } catch (err) {
       next(err);
     }
@@ -52,6 +53,18 @@ class AuthController {
         },
       });
     });
+  }
+
+  static async user(req: AuthRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      if(! req.auth) {
+        throw new UnauthorizedError()
+      }
+      
+      res.json(req.auth());
+    } catch (err) {
+      next(err)
+    }
   }
 }
 

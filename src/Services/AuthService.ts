@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import { User } from '../Types';
-import UnauthorizedError from '../Errors/UnauthorizedError';
+import { UnauthorizedError } from '../Errors';
 import { User as UserModel } from '../Models';
 
 class AuthService {

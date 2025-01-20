@@ -5,7 +5,7 @@ import {
   BalanceUpdateRequest,
 } from '../Validators/BalanceSchema';
 import { RESPONSE_CODES } from '../utils/response';
-import { AuthRequest } from '../Types';
+import { AuthRequ est } from '../Types';
 import { UnauthorizedError } from 'express-jwt';
 
 class BalanceController {

@@ -1,6 +1,5 @@
 import { Request } from 'express';
-import { User as SequelizeUser } from '../Models';
-import { ParamsDictionary, Resbod } from 'express-serve-static-core';
+import { ParamsDictionary } from 'express-serve-static-core';
 
 export interface User {
   id: number;
