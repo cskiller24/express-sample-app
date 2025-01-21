@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -7,11 +7,19 @@ import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
 import { AppFloatingConfigurator } from '../../layout/component/app.floatingconfigurator';
+import { UserService } from './services/user.service';
+import { Errors, ErrorsComponent } from '../../shared/components/errors.component';
+import { NgIf } from '@angular/common';
+
+interface AuthForm {
+    email: FormControl<string>;
+    password : FormControl<string>;
+}
 
 @Component({
     selector: 'app-login',
     standalone: true,
-    imports: [ButtonModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule, AppFloatingConfigurator],
+    imports: [ReactiveFormsModule, NgIf, ButtonModule, CheckboxModule, InputTextModule, PasswordModule, FormsModule, RouterModule, RippleModule, AppFloatingConfigurator, ErrorsComponent],
     template: `
         <app-floating-configurator />
         <div class="bg-surface-50 dark:bg-surface-950 flex items-center justify-center min-h-screen min-w-[100vw] overflow-hidden">
@@ -39,19 +47,20 @@ import { AppFloatingConfigurator } from '../../layout/component/app.floatingconf
                             <div class="text-surface-900 dark:text-surface-0 text-3xl font-medium mb-4">Test Project</div>
                             <span class="text-muted-color font-medium">Sign in to continue</span>
                         </div>
-
-                        <div>
-                            <label for="email1" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Email</label>
-                            <input pInputText id="email1" type="text" placeholder="Email address" class="w-full md:w-[30rem] mb-8" [(ngModel)]="email" />
+                        <app-list-errors />
+                        <form [formGroup]="authForm" (submit)="login()">
+                            <label for="email" class="block text-surface-900 dark:text-surface-0 text-xl font-medium mb-2">Email</label>
+                            <input formControlName="email" [disabled]="submitting" pInputText id="email" type="text" placeholder="Email address" class="w-full md:w-[30rem] mb-8" />
+                            <div *ngIf="email.pending">Validating...</div>
 
                             <label for="password1" class="block text-surface-900 dark:text-surface-0 font-medium text-xl mb-2">Password</label>
-                            <p-password id="password1" [(ngModel)]="password" placeholder="Password" [toggleMask]="true" styleClass="mb-4" [fluid]="true" [feedback]="false"></p-password>
+                            <p-password id="password1" formControlName="password" placeholder="Password" [toggleMask]="true" styleClass="mb-4" [fluid]="true" [feedback]="false"></p-password>
 
                             <div class="flex items-center justify-between mt-2 mb-8 gap-8">
                                 <span class="font-medium no-underline ml-2 text-right cursor-pointer text-primary">Forgot password?</span>
                             </div>
-                            <p-button label="Sign In" styleClass="w-full" routerLink="/"></p-button>
-                        </div>
+                            <p-button label="Sign In" styleClass="w-full" type="submit"></p-button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -59,7 +68,30 @@ import { AppFloatingConfigurator } from '../../layout/component/app.floatingconf
     `
 })
 export class Login {
-    email: string = 'asd';
-
+    email: string = '';
     password: string = '';
+    authForm: FormGroup<AuthForm>;
+    errors: Errors = {errors: {}};
+    submitting: boolean = false;
+
+    constructor(
+        private readonly userService: UserService,
+    ) {
+        this.authForm = new FormGroup<AuthForm>({
+            email: new FormControl(this.email, {
+                validators: [Validators.required, Validators.email],
+                nonNullable: true
+            }),
+            password: new FormControl(this.password, {
+                validators: [Validators.required],
+                nonNullable: true
+            }),
+        });
+    }
+
+    login() {
+        this.submitting = true;
+
+        const errors = this.authForm.hasError('email')
+    }
 }
