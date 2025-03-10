@@ -42,3 +42,5 @@
 2. E2E testing [Playwright / Cypress]
 3. Github actions (For Fun)
 4. Static Analysis
+
+POSTMAN API: https://www.postman.com/winter-equinox-993840/workspace/test-project-express
